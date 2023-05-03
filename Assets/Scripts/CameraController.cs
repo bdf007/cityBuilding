@@ -36,9 +36,28 @@ public class CameraController : MonoBehaviour
         // camera look
         if (Input.GetMouseButton(1))
         {
-            float x = Input.GetAxis("Mouse X") * rotateSpeed;
-            float y = Input.GetAxis("Mouse Y") * rotateSpeed;
+            float x = Input.GetAxis("Mouse X");
+            float y = Input.GetAxis("Mouse Y");
+            curXrot += -y * rotateSpeed;
+            curXrot = Mathf.Clamp(curXrot, minXRot, maxXRot);
+            transform.eulerAngles = new Vector3(curXrot, transform.eulerAngles.y + (x * rotateSpeed), 0);
            
         }
+
+        // camera move
+        Vector3 forward = cam.transform.forward;
+        forward.y = 0.0f;
+        forward.Normalize();
+        Vector3 right = cam.transform.right;
+
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
+
+        Vector3 moveDir = (forward * moveZ + right * moveX);
+        moveDir.Normalize();
+
+        moveDir *= moveSpeed * Time.deltaTime;
+        transform.position += moveDir;
+
     }
 }
