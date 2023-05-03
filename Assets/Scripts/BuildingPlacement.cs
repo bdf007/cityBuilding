@@ -53,7 +53,11 @@ public class BuildingPlacement : MonoBehaviour
 
     private void Buldoze()
     {
-        
+        Building buildingToDestroy = City.Instance.buildings.Find(x => x.transform.position == curIndicatorPos);
+        if(buildingToDestroy != null)
+        {
+            City.Instance.OnRemoveBuildng(buildingToDestroy);
+        }
     }
 
     // called when we press a building UI button
@@ -88,7 +92,7 @@ public class BuildingPlacement : MonoBehaviour
         GameObject buildingObj = Instantiate(curBuildingPreset.prefab, curIndicatorPos, Quaternion.identity);
 
         // tell city script
-
+        City.Instance.OnPlaceBuilding(buildingObj.GetComponent<Building>());
         CancelBuildingPlacement();
     }
 }

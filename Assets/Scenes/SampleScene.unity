@@ -1508,6 +1508,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b876ccbabdd3fad43b3ae93482c238ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  money: 100
+  day: 1
+  curPopulation: 0
+  curJobs: 0
+  curFood: 0
+  maxPopulation: 0
+  maxJobs: 0
+  incomePerJob: 10
+  statsText: {fileID: 446243455}
+  buildings: []
 --- !u!114 &1201737470
 MonoBehaviour:
   m_ObjectHideFlags: 0
