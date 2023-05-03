@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac79a74f88190644ca25d97d6aa2970b, type: 3}
   m_Name: Factory
   m_EditorClassIdentifier: 
-  cost: 25
-  costPerTurn: 10
+  cost: 5
+  costPerTurn: 5
   prefab: {fileID: 5110110745769921252, guid: 215be8f131080a54a831fc4a818b1f96, type: 3}
   population: 0
   jobs: 5

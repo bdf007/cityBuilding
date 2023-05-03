@@ -25,6 +25,11 @@ public class City : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        UpdateStatsText();
+    }
+
     // called when we place down a building
     public void OnPlaceBuilding(Building building)
     {
@@ -50,11 +55,54 @@ public class City : MonoBehaviour
     // update the stats text
     public void UpdateStatsText()
     {
-        statsText.text = "Day: " + day + "\n" +
-                         "Money: " + money + "\n" +
-                         "Population: " + curPopulation + "/" + maxPopulation + "\n" +
-                         "Jobs: " + curJobs + "/" + maxJobs + "\n" +
-                         "Food: " + curFood + "\n";
+        statsText.text = string.Format("Day: {0}   Money: ${1}   Pop.: {2} / {3}   Jobs: {4} / {5}   Food: {6}", new object[7] { day, money, curPopulation, maxPopulation, curJobs, maxJobs, curFood});
+    }
+
+    public void EndTurn()
+    {
+        day++;
+        CalculateMoney();
+        CalculatePopulation();
+        CalculateJobs();
+        CalculateFood();
+
+        UpdateStatsText() ;
+    }
+
+    void CalculateMoney()
+    {
+        money += curJobs * incomePerJob;
+        foreach(Building building in buildings)
+        {
+            money -= building.preset.costPerTurn;
+        }
+    }
+
+    void CalculatePopulation()
+    {
+        if(curFood >= curPopulation && curPopulation < maxPopulation)
+        {
+            curFood -= curPopulation / 4;
+            curPopulation = Mathf.Min(curPopulation + (curFood / 4), maxPopulation);
+        }
+        else if (curFood< curPopulation)
+        {
+            curPopulation = curFood;
+        }
+    }
+
+    void CalculateJobs()
+    {
+        curJobs = Mathf.Min(curPopulation, maxJobs);
+    }
+
+    void CalculateFood()
+    {
+        curFood = 0;
+        foreach(Building building in buildings)
+        {
+            curFood += building.preset.food;
+        }
     }
 }
 
